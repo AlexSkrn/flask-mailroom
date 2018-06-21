@@ -16,14 +16,14 @@ def home():
     return redirect(url_for('show_all'))
 
 
-@app.route('/donations/')
+@app.route('/donations')
 def show_all():
     """Handle a page showing all donors and donations."""
     donations = Donation.select()
     return render_template('donations.jinja2', donations=donations)
 
 
-@app.route('/create/', methods=['GET', 'POST'])
+@app.route('/create', methods=['GET', 'POST'])
 def create():
     """Handle creation of donors and donations."""
     # If user types an existing name, add a donation for such name
@@ -52,7 +52,7 @@ def show_single(donor, donations):
                            donations=donations)
 
 
-@app.route('/single/')
+@app.route('/single')
 def get_single():
     """Handle calls to a page to view donations for a single donor."""
     donor_name = request.args.get('name', None)
