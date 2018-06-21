@@ -1,0 +1,12 @@
+{% extends 'base.jinja2' %}
+
+{% block subtitle %}All donations of {{ donor.name }} {% endblock subtitle %}
+
+{% block content %}
+
+{{ donor.name }} has made the following donations
+{% for donation in donations %}
+  {{ donation.value }}
+{% endfor %}
+
+{% endblock content %}

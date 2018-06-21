@@ -9,10 +9,12 @@ from model import Donation, Donor, User
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY').encode()
 
+
 @app.route('/')
 def home():
     """Handle calls to the root of the web site."""
     return redirect(url_for('show_all'))
+
 
 @app.route('/donations/')
 def show_all():
@@ -40,6 +42,34 @@ def create():
             Donation(donor=new_donor, value=amount).save()
             return redirect(url_for('show_all'))
     return render_template('create.jinja2')
+
+
+
+def show_single(donor, donations):
+    return render_template('show_single.jinja2',
+                           donor=donor,
+                           donations=donations)
+
+
+@app.route('/single/')
+def get_single():
+    donor_name = request.args.get('name', None)
+
+    if donor_name is None:
+        return render_template('single.jinja2')
+    try:
+        donor = Donor.get(Donor.name == donor_name)
+    except Donor.DoesNotExist:
+        return render_template('single.jinja2', error="Donor not found")
+
+    try:
+        donations = Donation.select().where(Donation.donor == donor)
+    except Donation.DoesNotExist:
+        return render_template('single.jinja2', error="Donations not found")
+
+    return show_single(donor, donations)
+
+
 
 
 @app.route('/login', methods=['GET', 'POST'])

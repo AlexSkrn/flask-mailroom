@@ -1,0 +1,11 @@
+{% extends 'base.jinja2' %}
+
+{% block subtitle %}Get a single donor's donations {% endblock subtitle %}
+
+{% block content %}
+<form method="GET">
+  {% if error %}<span class="error">{{ error }}<br>{% endif %}
+	<label for="name">Donor's name: </label><input type="text" id="name" name="name">
+	<input type="submit" value="Get the donor's donations!">
+</form>
+{% endblock content %}
