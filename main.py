@@ -1,5 +1,5 @@
+"""This is the main module with functions for the web-based mailroom."""
 import os
-import base64
 
 from flask import Flask, render_template, request, redirect, url_for, session
 from passlib.hash import pbkdf2_sha256
@@ -18,6 +18,7 @@ def home():
 
 @app.route('/donations/')
 def show_all():
+    """Handle a page showing all donors and donations."""
     donations = Donation.select()
     return render_template('donations.jinja2', donations=donations)
 
@@ -44,8 +45,8 @@ def create():
     return render_template('create.jinja2')
 
 
-
 def show_single(donor, donations):
+    """Provide a helper function to render donations for a single donor."""
     return render_template('show_single.jinja2',
                            donor=donor,
                            donations=donations)
@@ -53,6 +54,7 @@ def show_single(donor, donations):
 
 @app.route('/single/')
 def get_single():
+    """Handle calls to a page to view donations for a single donor."""
     donor_name = request.args.get('name', None)
 
     if donor_name is None:
@@ -68,8 +70,6 @@ def get_single():
         return render_template('single.jinja2', error="Donations not found")
 
     return show_single(donor, donations)
-
-
 
 
 @app.route('/login', methods=['GET', 'POST'])
