@@ -1,0 +1,11 @@
+{% extends 'base.jinja2' %}
+
+{% block subtitle %}Creating new donations{% endblock subtitle %}
+
+{% block content %}
+<form method="POST">
+    <label for="name-input">New donor name:</label><input id="name-input" type="text" name="name"><br>
+    <label for="number">Donation amount:</label><input id="number" type="number" name="number"><br>
+    <input type="submit" value="Add donor and donation">
+</form>
+{% endblock content %}
